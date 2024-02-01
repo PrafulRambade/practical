@@ -53,10 +53,15 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="hidden" class="form-control" name="id" id="id" value="{{auth::user()->id}}" placeholder="Enter Gender">
+                                        <input type="hidden" class="form-control" name="id" id="id" value="{{auth::user()->id}}">
                                         {{-- <label for="exampleInputEmail1">Email address</label> --}}
-                                        <input type="text" class="form-control" name="gender" id="gender" placeholder="Enter Gender">
-                                    
+                                        {{-- <input type="text" class="form-control" name="gender" id="gender" placeholder="Enter Gender"> --}}
+                                      <select class="custom-select" name="gender" id="gender" placeholder="Enter Gender">
+                                        <option value="">Select Gender</option>
+                                        @foreach($gender as $gd)
+                                          <option value="{{$gd->id}}">{{$gd->name}}</option>
+                                        @endforeach
+                                      </select>
                                       </div>
                                 </div>
                                 <div class="col-md-6">
@@ -92,10 +97,12 @@
                                         {{-- <label for="exampleInputFile">File input</label> --}}
                                         <div class="input-group">
                                           <p class="mt-5 text-center" style="margin-top:0px !important">
-                                            <label for="attachment">
+                                            <label for="files">
                                                 <a class="btn btn-info text-light" role="button" aria-disabled="false">+ Add Files</a>
                                             </label>
-                                          <input type="file" name="file1[]"  id="attachment" style="visibility: hidden; position: absolute;" multiple/>	
+                                            
+                                            <input type="file" style="z-index:1000" name="files[]"  id="files" placeholder="Choose files" multiple >
+                                          {{-- <input type="file" name="files[]"  id="attachment" style="visibility: hidden; position: absolute;" multiple/>	 --}}
                                             </p>
                                             <p id="files-area">
                                                 <span id="filesList">
@@ -151,7 +158,7 @@
             });
             const dt = new DataTransfer(); // Permet de manipuler les fichiers de l'input file
 
-                $("#attachment").on('change', function(e){
+                $("#files").on('change', function(e){
                     for(var i = 0; i < this.files.length; i++){
                         let fileBloc = $('<span/>', {class: 'file-block'}),
                             fileName = $('<span/>', {class: 'name', text: this.files.item(i).name});
@@ -180,7 +187,7 @@
                             }
                         }
                         // Mise à jour des fichiers de l'input file après suppression
-                        document.getElementById('attachment').files = dt.files;
+                        document.getElementById('files').files = dt.files;
                     });
                 });
             $('form#profile_data').submit(function(e) {
@@ -213,36 +220,37 @@
             });
 
 
-            $(document).on('click','#complete_profile_data',function(e) {
+            // $(document).on('click','#complete_profile_data',function(e) {
                     
-                    var formData = new FormData(document.getElementById("profile_data"));
+            //         var formData = new FormData(document.getElementById("profile_data"));
 
 
-                    let TotalFiles = $('#files')[0].files.length; //Total files
-                    let files = $('#files')[0];
-                    for (let i = 0; i < TotalFiles; i++) {
-                        formData.append('files' + i, files.files[i]);
-                    }
-                    formData.append('TotalFiles', TotalFiles);
-                    $.ajax({
-                                url: "{{route('profile.image')}}",
-                                data: formData,
-                                cache: false,
-                                contentType: false,
-                                processData: false,
-                                type: 'POST',
-                                dataType:'json',
-                                success: (data) => {
-                                  // formData.reset();
-                                  // $('#profile_data').reset()
-                                alert('User Profile Images Added Succefully');
-                                },
-                                error: function(data){
-                                alert(data.responseJSON.errors.files);
-                                console.log(data.responseJSON.errors);
-                                }
-                            });
-            });
+            //         let TotalFiles = $('#files')[0].files.length; //Total files
+            //         let files = $('#files')[0];
+            //         for (let i = 0; i < TotalFiles; i++) {
+            //             formData.append('files' + i, files.files[i]);
+            //         }
+            //         console.log(TotalFiles);
+            //         formData.append('TotalFiles', TotalFiles);
+            //         $.ajax({
+            //                     url: "{{route('profile.image')}}",
+            //                     data: formData,
+            //                     cache: false,
+            //                     contentType: false,
+            //                     processData: false,
+            //                     type: 'POST',
+            //                     dataType:'json',
+            //                     success: (data) => {
+            //                       // formData.reset();
+            //                       // $('#profile_data').reset()
+            //                     alert('User Profile Images Added Succefully');
+            //                     },
+            //                     error: function(data){
+            //                     alert(data.responseJSON.errors.files);
+            //                     console.log(data.responseJSON.errors);
+            //                     }
+            //                 });
+            // });
         });
     </script>
 @endsection

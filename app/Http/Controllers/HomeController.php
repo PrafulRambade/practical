@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use auth;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -32,8 +33,8 @@ class HomeController extends Controller
                 return view('dashboard');
             }else{
                 $user_data = auth::user();
-                $users = DB::table('users')->get();
-                return view('complete-profile',$user_data);
+                $gender = DB::table('gender')->get();
+                return view('complete-profile',['user_data' => $user_data,'gender'=>$gender]);
             }
         // return view('dashboard');
     }
