@@ -31,13 +31,13 @@
             </div>
             <div class="card-body">
                
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-lg">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#complete-profile">
                   Click Here To Complete Your Profile
                
               </div> 
             <!-- /.card-body -->
           </div>
-          <div class="modal fade" id="modal-lg">
+          <div class="modal fade" id="complete-profile">
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
                 <div class="modal-header">
@@ -101,7 +101,7 @@
                                                 <a class="btn btn-info text-light" role="button" aria-disabled="false">+ Add Files</a>
                                             </label>
                                             
-                                            <input type="file" style="z-index:1000" name="files[]"  id="files" placeholder="Choose files" multiple >
+                                            <input type="file" name="files[]"  id="files" style="visibility: hidden; position: absolute;" placeholder="Choose files" multiple >
                                           {{-- <input type="file" name="files[]"  id="attachment" style="visibility: hidden; position: absolute;" multiple/>	 --}}
                                             </p>
                                             <p id="files-area">
